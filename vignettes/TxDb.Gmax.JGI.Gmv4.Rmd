@@ -17,8 +17,8 @@ from the JGI/Phytozome gene GFF3 annotation using the matching Wm82.a4.v1
 reference assembly.
 
 The TxDb object is distributed through **AnnotationHub** rather than shipped
-inside the package. The package provides `get_gmax_txdb()` as a convenience
-function for retrieving the current AnnotationHub resource.
+inside the package. Users can search AnnotationHub for the package name and
+retrieve the registered SQLite resource directly.
 
 # Installation
 
@@ -40,7 +40,7 @@ BiocManager::install(c(
 # Load the package
 
 ```{r loading, message=FALSE}
-library(TxDb.Gmax.JGI.Gmv4)
+library(AnnotationHub)
 library(GenomicFeatures)
 library(GenomicRanges)
 library(GenomeInfoDb)
@@ -48,19 +48,23 @@ library(GenomeInfoDb)
 
 # Retrieve the TxDb object
 
-The TxDb resource is hosted in AnnotationHub. The following command retrieves
-the database and caches it locally for subsequent use. This chunk is not run
-during vignette building because it requires network access.
+The TxDb resource is hosted in AnnotationHub. Search for the package name to
+identify the currently registered resource. This chunk is not run during
+vignette building because it requires network access.
 
 ```{r annotationhub, eval=FALSE}
-txdb <- get_gmax_txdb()
+ah <- AnnotationHub()
+query(ah, "TxDb.Gmax.JGI.Gmv4")
 
-# Reuse an AnnotationHub instance and its cache when needed:
-ah <- AnnotationHub::AnnotationHub()
-txdb <- get_gmax_txdb(hub = ah)
+# The previously registered resource is AH122288. After the updated metadata
+# is registered, use the new resource ID shown by query() instead.
+txdb <- ah[["AH122288"]]
 ```
 
-The current resource identifier is `AH122288`. The database corresponds to
+The previously registered resource identifier is `AH122288`; it corresponds
+to the earlier Zenodo deposit. The current identifier should be selected from
+the AnnotationHub query results after the updated metadata is registered. The
+database corresponds to
 *Glycine max* Wm82.a4.v1 and uses JGI/Phytozome locus identifiers.
 
 # TxDb summary
