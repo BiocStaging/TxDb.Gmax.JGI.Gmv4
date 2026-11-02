@@ -1,6 +1,6 @@
 Package: TxDb.Gmax.JGI.Gmv4
-Title: Transcripts Annotation Database for Soybean
-Version: 0.99.1
+Title: Transcript Annotation Database for Soybean
+Version: 0.99.2
 Authors@R:
     c(
       person("Dwijesh Chandra", "Mishra",
@@ -16,26 +16,28 @@ Authors@R:
              email="info@iari.res.in")
     )
 Description:
-    TxDb.Gmax.JGI.Gmv4 provides transcript, exon, and CDS annotations 
-    for soybean (Glycine max Wm82.a4.v1). It is a Bioconductor TxDb 
-    object built from the official JGI/Phytozome GFF3 annotation and 
-    is available via AnnotationHub (retrievable with AnnotationHub()); 
-    after loading you can use GenomicFeatures accessors (genes(), 
-    transcripts(), exonsBy(), cdsBy()) to extract gene models identified 
-    by JGI/Phytozome locus IDs.
+    TxDb.Gmax.JGI.Gmv4 provides transcript, exon, and CDS annotations
+    for soybean (Glycine max Wm82.a4.v1). The TxDb was generated from the
+    JGI/Phytozome GFF3 annotation and is distributed through AnnotationHub.
+    Use get_gmax_txdb() to retrieve the database and GenomicFeatures
+    accessors such as genes(), transcripts(), exonsBy(), and cdsBy() to
+    query gene models identified by JGI/Phytozome locus IDs.
 Depends:
     R (>= 4.6.0)
 Imports:
-    stats,
-    GenomicFeatures,
-    GenomicRanges,
-    AnnotationHub
+    AnnotationHub,
+    GenomicFeatures
 Suggests:
+    AnnotationDbi,
     BiocManager,
     BiocStyle,
+    Biostrings,
+    GenomeInfoDb,
+    GenomicRanges,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    txdbmaker
 VignetteBuilder: knitr
 License: Artistic-2.0
 Encoding: UTF-8
