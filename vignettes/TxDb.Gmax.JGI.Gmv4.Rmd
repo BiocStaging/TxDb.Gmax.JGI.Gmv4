@@ -4,9 +4,9 @@ author: "Kabilan S"
 date: "2026-11-02"
 output: BiocStyle::html_document
 vignette: >
-  %\\VignetteIndexEntry{Transcript Annotation Database for Glycine max Wm82.a4.v1}
-  %\\VignetteEngine{knitr::rmarkdown}
-  %\\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Transcript Annotation Database for Glycine max Wm82.a4.v1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
