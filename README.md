@@ -19,35 +19,41 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::install(version = "devel")
 BiocManager::install(c(
     "TxDb.Gmax.JGI.Gmv4",
+    "AnnotationHub",
     "GenomicFeatures",
     "GenomicRanges"
 ))
 ```
 
-## Retrieve the TxDb
+## Retrieve the TxDb from AnnotationHub
 
-The SQLite database is hosted by AnnotationHub and is downloaded and cached
-when first requested.
+The TxDb SQLite database is hosted in AnnotationHub and is downloaded and
+cached when requested. Search the hub for this package to identify its
+currently registered resource:
 
 ```r
-library(TxDb.Gmax.JGI.Gmv4)
+library(AnnotationHub)
 library(GenomicFeatures)
 
-txdb <- get_gmax_txdb()
+ah <- AnnotationHub()
+query(ah, "TxDb.Gmax.JGI.Gmv4")
+```
 
+The previously registered resource is `AH122288`. It corresponds to the
+earlier Zenodo deposit. After the updated metadata has been registered by
+AnnotationHub, use the new resource ID shown by the query above:
+
+```r
+txdb <- ah[["AH122288"]]  # replace with the current resource ID from query()
+```
+
+## Query the annotation
+
+```r
 genes(txdb)
 head(transcripts(txdb))
 exonsBy(txdb, by = "tx")
 cdsBy(txdb, by = "tx")
-```
-
-The helper function `get_gmax_txdb()` retrieves the package's current
-AnnotationHub resource. You may also provide an existing `AnnotationHub`
-instance to reuse its cache:
-
-```r
-ah <- AnnotationHub::AnnotationHub()
-txdb <- get_gmax_txdb(hub = ah)
 ```
 
 ## Reference and annotation source
