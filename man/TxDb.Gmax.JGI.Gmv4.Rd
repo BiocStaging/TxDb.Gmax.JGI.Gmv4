@@ -10,7 +10,8 @@
   \pkg{TxDb.Gmax.JGI.Gmv4} provides transcript, exon, and coding sequence
   (CDS) annotations for soybean (\emph{Glycine max}, Wm82.a4.v1), based on
   the JGI/Phytozome GFF3 annotation. The TxDb object is hosted in
-  AnnotationHub and can be retrieved with \code{get_gmax_txdb()}.
+  AnnotationHub and can be retrieved directly with the AnnotationHub
+  package.
 }
 
 \note{
@@ -24,13 +25,16 @@
 }
 
 \seealso{
-  \code{\link{get_gmax_txdb}},
+  \link[GenomicFeatures]{genes},
   \link[GenomicFeatures]{transcripts},
   \link[GenomicFeatures]{transcriptsBy}
 }
 
 \examples{
-formals(get_gmax_txdb)
+## Search AnnotationHub for the current resource (requires network access):
+## ah <- AnnotationHub::AnnotationHub()
+## query(ah, "TxDb.Gmax.JGI.Gmv4")
+## txdb <- ah[["AH122288"]]  # use the current ID returned by query()
 }
 
 \keyword{package}
