@@ -3,7 +3,8 @@
 **TxDb.Gmax.JGI.Gmv4** provides transcript, exon, and coding sequence (CDS)
 annotations for soybean (*Glycine max*, Wm82.a4.v1). The database was generated
 from the official JGI/Phytozome GFF3 annotation and is distributed through
-Bioconductor's AnnotationHub.
+Bioconductor's AnnotationHub. The regenerated SQLite resource is deposited
+at [Zenodo record 23882021](https://zenodo.org/records/23882021).
 
 ## Installation
 
