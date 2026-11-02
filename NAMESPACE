@@ -1,8 +1,3 @@
-importFrom(stats,setNames)
-#'@import GenomicFeatures()
-#'@import AnnotationHub()
-#'@import GenomicRanges()
-
-### The TxDb.Gmax.JGI.Gmv4 object is not shipped in, or exported by,
-### this package: it is hosted on AnnotationHub and retrieved at runtime
-### (see the vignette).
+export(get_gmax_txdb)
+importClassesFrom(GenomicFeatures,TxDb)
+importFrom(AnnotationHub,AnnotationHub)
