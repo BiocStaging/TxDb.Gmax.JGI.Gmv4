@@ -6,7 +6,7 @@
   the Wm82.a4.v1 reference FASTA and validate the saved SQLite database.
 - Aligned AnnotationHub metadata with the JGI/Phytozome Wm82.a4.v1 source.
 - Updated the SQLite resource path to Zenodo record 23882021.
-- Added `get_gmax_txdb()` for retrieving the TxDb from AnnotationHub.
+- Documented direct retrieval of the TxDb through AnnotationHub; no package-specific retrieval helper is required.
 - Updated package dependencies, installation instructions, and vignette.
 
 ## Version 0.99.1 (2026-09-04)
