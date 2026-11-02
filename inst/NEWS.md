@@ -5,6 +5,7 @@
 - Updated the data-generation workflow to derive sequence information from
   the Wm82.a4.v1 reference FASTA and validate the saved SQLite database.
 - Aligned AnnotationHub metadata with the JGI/Phytozome Wm82.a4.v1 source.
+- Updated the SQLite resource path to Zenodo record 23882021.
 - Added `get_gmax_txdb()` for retrieving the TxDb from AnnotationHub.
 - Updated package dependencies, installation instructions, and vignette.
 
