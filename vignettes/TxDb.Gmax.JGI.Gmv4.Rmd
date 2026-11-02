@@ -1,0 +1,153 @@
+---
+title: "Transcript Annotation Database for *Glycine max* (Wm82.a4.v1)"
+author: "Kabilan S"
+date: "2026-11-02"
+output: BiocStyle::html_document
+vignette: >
+  %\\VignetteIndexEntry{Transcript Annotation Database for Glycine max Wm82.a4.v1}
+  %\\VignetteEngine{knitr::rmarkdown}
+  %\\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+**TxDb.Gmax.JGI.Gmv4** provides transcript, exon, and coding sequence (CDS)
+annotations for soybean (*Glycine max*, Wm82.a4.v1). The database was generated
+from the JGI/Phytozome gene GFF3 annotation using the matching Wm82.a4.v1
+reference assembly.
+
+The TxDb object is distributed through **AnnotationHub** rather than shipped
+inside the package. The package provides `get_gmax_txdb()` as a convenience
+function for retrieving the current AnnotationHub resource.
+
+# Installation
+
+Install the package and the Bioconductor packages used for downstream queries:
+
+```{r install, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+
+BiocManager::install(version = "devel")
+BiocManager::install(c(
+    "TxDb.Gmax.JGI.Gmv4",
+    "GenomicFeatures",
+    "GenomicRanges"
+))
+```
+
+# Load the package
+
+```{r loading, message=FALSE}
+library(TxDb.Gmax.JGI.Gmv4)
+library(GenomicFeatures)
+library(GenomicRanges)
+library(GenomeInfoDb)
+```
+
+# Retrieve the TxDb object
+
+The TxDb resource is hosted in AnnotationHub. The following command retrieves
+the database and caches it locally for subsequent use. This chunk is not run
+during vignette building because it requires network access.
+
+```{r annotationhub, eval=FALSE}
+txdb <- get_gmax_txdb()
+
+# Reuse an AnnotationHub instance and its cache when needed:
+ah <- AnnotationHub::AnnotationHub()
+txdb <- get_gmax_txdb(hub = ah)
+```
+
+The current resource identifier is `AH122288`. The database corresponds to
+*Glycine max* Wm82.a4.v1 and uses JGI/Phytozome locus identifiers.
+
+# TxDb summary
+
+```{r summary, eval=FALSE}
+txdb
+summary(txdb)
+```
+
+# Sequence information
+
+Inspect the sequence names, sequence lengths, and genome label stored in the
+TxDb:
+
+```{r seqinfo, eval=FALSE}
+seqinfo(txdb)
+seqlevels(txdb)
+genome(seqinfo(txdb))
+```
+
+# Gene annotations
+
+Gene ranges can be extracted with `genes()`:
+
+```{r genes, eval=FALSE}
+gene_ranges <- genes(txdb)
+head(gene_ranges)
+```
+
+# Transcript annotations
+
+Transcript ranges can be extracted with `transcripts()`:
+
+```{r transcripts, eval=FALSE}
+transcript_ranges <- transcripts(txdb)
+head(transcript_ranges)
+```
+
+# Exon annotations
+
+Retrieve exon ranges or group exons by transcript:
+
+```{r exons, eval=FALSE}
+exon_ranges <- exons(txdb)
+head(exon_ranges)
+
+exons_by_transcript <- exonsBy(txdb, by = "tx")
+exons_by_transcript
+```
+
+# Coding sequence annotations
+
+CDS ranges can be extracted with `cds()` or grouped by transcript using
+`cdsBy()`:
+
+```{r cds, eval=FALSE}
+cds_ranges <- cds(txdb)
+head(cds_ranges)
+
+cds_by_transcript <- cdsBy(txdb, by = "tx")
+cds_by_transcript
+```
+
+# Promoter regions
+
+Promoter ranges can be derived from the annotated transcription start sites.
+The example below selects 2 kb upstream and 200 bp downstream of each
+transcription start site:
+
+```{r promoters, eval=FALSE}
+promoter_ranges <- promoters(
+    txdb,
+    upstream = 2000,
+    downstream = 200
+)
+head(promoter_ranges)
+```
+
+# Annotation source
+
+The annotation is based on the JGI/Phytozome *Glycine max* Wm82.a4.v1 gene
+GFF3 file, `Gmax_508_Wm82.a4.v1.gene.gff3.gz`, and the matching reference
+FASTA, `Gmax_508_v4.0.fa.gz`. Both are available from the
+[JGI Data Portal](https://data.jgi.doe.gov/refine-download/phytozome?expanded=Phytozome-508&genome_id=508).
+
+# Session information
+
+```{r sessioninfo}
+sessionInfo()
+```
