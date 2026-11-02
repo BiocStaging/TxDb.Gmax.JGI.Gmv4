@@ -13,10 +13,11 @@
 ###   - Gmax_508_Wm82.a4.v1.gene.gff3.gz
 ###   - Gmax_508_v4.0.fa.gz
 ###
-### The SQLite database is distributed through AnnotationHub. If the
-### regenerated database is uploaded to a new Zenodo record, update
-### inst/extdata/metadata.csv to point to that record and its new
-### AnnotationHub resource.
+### The regenerated SQLite database is deposited at Zenodo record 23882021:
+### https://zenodo.org/records/23882021
+### Its file path is recorded in inst/extdata/metadata.csv. The corresponding
+### AnnotationHub resource ID must be updated after the new metadata entry has
+### been registered by AnnotationHub.
 ###
 ### This script is retained for provenance/reproducibility and is not run
 ### during package installation or R CMD check.
