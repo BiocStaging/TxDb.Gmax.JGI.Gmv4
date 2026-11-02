@@ -37,11 +37,7 @@ meta <- data.frame(
     DispatchClass = "SQLiteFile",
     Location_Prefix = "https://zenodo.org/",
     RDataPath = "record/21847817/files/TxDb.Gmax.JGI.Gmv4.sqlite",
-    Tags = paste(
-        "AnnotationData:TxDb:Glycine_max:SequenceAnnotation:AnnotationHub",
-        "GenomeAssembly:Wm82.a4.v1",
-        sep = ":"
-    ),
+    Tags = "AnnotationData:TxDb:Glycine_max:SequenceAnnotation:AnnotationHub",
     stringsAsFactors = FALSE
 )
 
