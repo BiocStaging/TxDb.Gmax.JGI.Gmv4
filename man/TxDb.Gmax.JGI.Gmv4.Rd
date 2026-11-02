@@ -3,54 +3,34 @@
 
 \alias{TxDb.Gmax.JGI.Gmv4-package}
 \alias{TxDb.Gmax.JGI.Gmv4}
-\alias{TxDb.Gmax.JGI.Gmv4}
-\alias{TTxDb.Gmax.JGI.Gmv4_dbconn}
-\alias{TxDb.Gmax.JGI.Gmv4_dbfile}
 
-\title{Annotation package for TxDb object(s)}
+\title{Transcript annotation database for soybean}
 
 \description{
-  TxDb.Gmax.JGI.Gmv4 provides transcript, exon, and CDS annotations
-  for soybean (Glycine max Wm82.a4.v1). It is a Bioconductor TxDb
-  object built from the official JGI/Phytozome GFF3 annotation and
-  is available via AnnotationHub (retrievable with AnnotationHub());
-  after loading you can use GenomicFeatures accessors (genes(),
-  transcripts(), exonsBy(), cdsBy()) to extract gene models identified
-  by JGI/Phytozome locus IDs.
+  \pkg{TxDb.Gmax.JGI.Gmv4} provides transcript, exon, and coding sequence
+  (CDS) annotations for soybean (\emph{Glycine max}, Wm82.a4.v1), based on
+  the JGI/Phytozome GFF3 annotation. The TxDb object is hosted in
+  AnnotationHub and can be retrieved with \code{get_gmax_txdb()}.
 }
 
 \note{
-  This data package was built from the JGI/Phytozome GFF3 annotation of
-  soybean (Glycine max Wm82.a4.v1).
+  The TxDb object is not bundled inside this package. It is distributed
+  through AnnotationHub and cached locally after retrieval.
 }
 
 \author{
   Dwijesh Chandra Mishra (aut),
-  Sharanbasappa D Madival (aut),
   Kabilan S (aut, cre) \email{kabilan151414@gmail.com}
 }
 
 \seealso{
+  \code{\link{get_gmax_txdb}},
   \link[GenomicFeatures]{transcripts},
   \link[GenomicFeatures]{transcriptsBy}
 }
 
 \examples{
-## The TxDb object is downloaded from AnnotationHub, so this example is
-## only run when AnnotationHub is installed and the resource is
-## reachable.
-if (requireNamespace("AnnotationHub", quietly=TRUE)) {
-    txdb <- tryCatch({
-        ah <- AnnotationHub::AnnotationHub()
-        ah[["AH122288"]]
-    }, error=function(e) NULL)
-
-    if (!is.null(txdb)) {
-        txdb
-        ## retrieve all genes
-        GenomicFeatures::genes(txdb)
-    }
-}
+formals(get_gmax_txdb)
 }
 
 \keyword{package}
