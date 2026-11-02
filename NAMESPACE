@@ -1,3 +1,2 @@
-export(get_gmax_txdb)
-importClassesFrom(GenomicFeatures,TxDb)
-importFrom(AnnotationHub,AnnotationHub)
+import(AnnotationDbi)
+import(GenomicFeatures)
