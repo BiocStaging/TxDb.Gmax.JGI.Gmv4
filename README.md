@@ -1,42 +1,59 @@
 # TxDb.Gmax.JGI.Gmv4
 
-TxDb.Gmax.JGI.Gmv4 provides transcript, exon, and CDS annotations 
-for soybean (Glycine max Wm82.a4.v1). It is a Bioconductor TxDb 
-object built from the official JGI/Phytozome GFF3 annotation; 
-after loading you can use GenomicFeatures accessors (genes(), 
-transcripts(), exonsBy(), cdsBy()) to extract gene models identified 
-by JGI/Phytozome locus IDs.
+**TxDb.Gmax.JGI.Gmv4** provides transcript, exon, and coding sequence (CDS)
+annotations for soybean (*Glycine max*, Wm82.a4.v1). The database was generated
+from the official JGI/Phytozome GFF3 annotation and is distributed through
+Bioconductor's AnnotationHub.
 
 ## Installation
+
+The package requires R 4.6 or later and the Bioconductor development release
+(Bioconductor 3.24).
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
-BiocManager::install(c("AnnotationHub", "GenomicFeatures"))
-```
-## Usage
 
-The TxDb object is not shipped inside the package; it is hosted on
-AnnotationHub and downloaded on first use.
+BiocManager::install(version = "devel")
+BiocManager::install(c(
+    "TxDb.Gmax.JGI.Gmv4",
+    "GenomicFeatures",
+    "GenomicRanges"
+))
+```
+
+## Retrieve the TxDb
+
+The SQLite database is hosted by AnnotationHub and is downloaded and cached
+when first requested.
 
 ```r
 library(TxDb.Gmax.JGI.Gmv4)
-library(AnnotationHub)
 library(GenomicFeatures)
 
-ah <- AnnotationHub()
-txdb <- ah[["AH122288"]]
+txdb <- get_gmax_txdb()
 
 genes(txdb)
 head(transcripts(txdb))
 exonsBy(txdb, by = "tx")
+cdsBy(txdb, by = "tx")
 ```
 
-See the vignette for a full walkthrough:
+The helper function `get_gmax_txdb()` retrieves the package's current
+AnnotationHub resource. You may also provide an existing `AnnotationHub`
+instance to reuse its cache:
 
 ```r
-vignette("vignette", package = "TxDb.Gmax.JGI.Gmv4")
+ah <- AnnotationHub::AnnotationHub()
+txdb <- get_gmax_txdb(hub = ah)
 ```
 
+## Reference and annotation source
 
+The database represents the JGI/Phytozome *Glycine max* Wm82.a4.v1 annotation.
+The annotation GFF3 and matching Wm82.a4.v1 reference assembly FASTA are
+available from the [JGI Data Portal](https://data.jgi.doe.gov/refine-download/phytozome?expanded=Phytozome-508&genome_id=508).
+
+See the package vignette for examples of querying genes, transcripts, exons,
+CDS features, and promoter regions.
