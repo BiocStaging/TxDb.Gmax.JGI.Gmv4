@@ -19,16 +19,16 @@ Description:
     TxDb.Gmax.JGI.Gmv4 provides transcript, exon, and CDS annotations
     for soybean (Glycine max Wm82.a4.v1). The TxDb was generated from the
     JGI/Phytozome GFF3 annotation and is distributed through AnnotationHub.
-    Users can retrieve the TxDb directly with AnnotationHub and query gene
-    models using GenomicFeatures accessors such as genes(), transcripts(),
-    exonsBy(), and cdsBy().
+    Use get_gmax_txdb() to retrieve the database and GenomicFeatures
+    accessors such as genes(), transcripts(), exonsBy(), and cdsBy() to
+    query gene models identified by JGI/Phytozome locus IDs.
 Depends:
-    R (>= 4.6.0),
-    GenomicFeatures
+    R (>= 4.5.0)
 Imports:
-    AnnotationDbi
-Suggests:
     AnnotationHub,
+    GenomicFeatures
+Suggests:
+    AnnotationDbi,
     BiocManager,
     BiocStyle,
     Biostrings,
