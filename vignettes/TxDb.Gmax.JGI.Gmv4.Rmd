@@ -1,154 +1,159 @@
 ---
-title: "Transcript Annotation Database for *Glycine max* (Wm82.a4.v1)"
+title: "Transcript Annotation Database for Glycine max (Wm82.a4.v1)"
 author: "Kabilan S"
-date: "2026-11-02"
 output: BiocStyle::html_document
 vignette: >
-  %\VignetteIndexEntry{Transcript Annotation Database for Glycine max Wm82.a4.v1}
+  %\VignetteIndexEntry{TxDb.Gmax.JGI.Gmv4}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
 
-**TxDb.Gmax.JGI.Gmv4** provides transcript, exon, and coding sequence (CDS)
-annotations for soybean (*Glycine max*, Wm82.a4.v1). The database was generated
-from the JGI/Phytozome gene GFF3 annotation using the matching Wm82.a4.v1
-reference assembly.
+`TxDb.Gmax.JGI.Gmv4` provides transcript, exon, CDS, and gene annotations
+for soybean (*Glycine max*, Wm82.a4.v1). The database was generated from the
+official JGI/Phytozome gene GFF3 annotation using the matching Wm82.a4.v1
+reference genome assembly.
 
-The TxDb object is distributed through **AnnotationHub** rather than shipped
-inside the package. Users can search AnnotationHub for the package name and
-retrieve the registered SQLite resource directly.
+This vignette demonstrates how to retrieve the transcript database from
+`AnnotationHub` and access genes, transcripts, exons, coding sequences,
+promoter regions, and feature relationships.
 
 # Installation
 
-Install the package and the Bioconductor packages used for downstream queries:
+Install the package from Bioconductor with:
 
 ```{r install, eval=FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
-
-BiocManager::install(version = "devel")
-BiocManager::install(c(
-    "TxDb.Gmax.JGI.Gmv4",
-    "GenomicFeatures",
-    "GenomicRanges"
-))
+BiocManager::install("TxDb.Gmax.JGI.Gmv4")
 ```
 
-# Load the package
+# Load required packages
 
-```{r loading, message=FALSE}
+```{r loading, message=FALSE, warning=FALSE}
 library(AnnotationHub)
 library(GenomicFeatures)
 library(GenomicRanges)
 library(GenomeInfoDb)
 ```
 
-# Retrieve the TxDb object
+# Retrieve the TxDb object from AnnotationHub
 
-The TxDb resource is hosted in AnnotationHub. Search for the package name to
-identify the currently registered resource. This chunk is not run during
-vignette building because it requires network access.
+The TxDb object is retrieved using its AnnotationHub record:
 
-```{r annotationhub, eval=FALSE}
-ah <- AnnotationHub()
-query(ah, "TxDb.Gmax.JGI.Gmv4")
-
-# The previously registered resource is AH122288. After the updated metadata
-# is registered, use the new resource ID shown by query() instead.
-txdb <- ah[["AH122288"]]
+```{r annotationhub, message=FALSE, warning=FALSE}
+ah <- AnnotationHub::AnnotationHub()
+TxDb.Gmax.JGI.Gmv4 <- ah[["AH122288"]]
 ```
 
-The previously registered resource identifier is `AH122288`; it corresponds
-to the earlier Zenodo deposit. The current identifier should be selected from
-the AnnotationHub query results after the updated metadata is registered. The
-database corresponds to
-*Glycine max* Wm82.a4.v1 and uses JGI/Phytozome locus identifiers.
+Check the class of the retrieved object:
+
+```{r class}
+class(TxDb.Gmax.JGI.Gmv4)
+```
 
 # TxDb summary
 
-```{r summary, eval=FALSE}
-txdb
-summary(txdb)
+Display the transcript database:
+
+```{r txdb}
+TxDb.Gmax.JGI.Gmv4
+```
+
+A summary can also be obtained with:
+
+```{r summary}
+summary(TxDb.Gmax.JGI.Gmv4)
 ```
 
 # Sequence information
 
-Inspect the sequence names, sequence lengths, and genome label stored in the
-TxDb:
+The sequence information is available through `seqinfo()`:
 
-```{r seqinfo, eval=FALSE}
-seqinfo(txdb)
-seqlevels(txdb)
-genome(seqinfo(txdb))
+```{r seqinfo}
+seqinfo(TxDb.Gmax.JGI.Gmv4)
+```
+
+The available sequence levels can be obtained with:
+
+```{r seqlevels}
+head(seqlevels(TxDb.Gmax.JGI.Gmv4))
 ```
 
 # Gene annotations
 
 Gene ranges can be extracted with `genes()`:
 
-```{r genes, eval=FALSE}
-gene_ranges <- genes(txdb)
-head(gene_ranges)
+```{r genes}
+gene_annotations <- genes(TxDb.Gmax.JGI.Gmv4)
+gene_annotations
 ```
 
 # Transcript annotations
 
 Transcript ranges can be extracted with `transcripts()`:
 
-```{r transcripts, eval=FALSE}
-transcript_ranges <- transcripts(txdb)
-head(transcript_ranges)
+```{r transcripts}
+transcript_annotations <- transcripts(TxDb.Gmax.JGI.Gmv4)
+head(transcript_annotations)
 ```
 
 # Exon annotations
 
-Retrieve exon ranges or group exons by transcript:
+Exon ranges can be extracted with `exons()`:
 
-```{r exons, eval=FALSE}
-exon_ranges <- exons(txdb)
-head(exon_ranges)
-
-exons_by_transcript <- exonsBy(txdb, by = "tx")
-exons_by_transcript
+```{r exons}
+exon_annotations <- exons(TxDb.Gmax.JGI.Gmv4)
+head(exon_annotations)
 ```
 
-# Coding sequence annotations
+# Coding sequences (CDS)
 
-CDS ranges can be extracted with `cds()` or grouped by transcript using
-`cdsBy()`:
+Coding sequence ranges can be extracted with `cds()`:
 
-```{r cds, eval=FALSE}
-cds_ranges <- cds(txdb)
-head(cds_ranges)
-
-cds_by_transcript <- cdsBy(txdb, by = "tx")
-cds_by_transcript
+```{r cds}
+cds_annotations <- cds(TxDb.Gmax.JGI.Gmv4)
+head(cds_annotations)
 ```
 
 # Promoter regions
 
-Promoter ranges can be derived from the annotated transcription start sites.
-The example below selects 2 kb upstream and 200 bp downstream of each
-transcription start site:
+Promoter regions can be generated using `promoters()`:
 
-```{r promoters, eval=FALSE}
-promoter_ranges <- promoters(
-    txdb,
+```{r promoters}
+promoter_annotations <- promoters(
+    TxDb.Gmax.JGI.Gmv4,
     upstream = 2000,
     downstream = 200
 )
-head(promoter_ranges)
+head(promoter_annotations)
 ```
 
-# Annotation source
+# Transcripts grouped by gene
 
-The annotation is based on the JGI/Phytozome *Glycine max* Wm82.a4.v1 gene
-GFF3 file, `Gmax_508_Wm82.a4.v1.gene.gff3.gz`, and the matching reference
-FASTA, `Gmax_508_v4.0.fa.gz`. Both are available from the
-[JGI Data Portal](https://data.jgi.doe.gov/refine-download/phytozome?expanded=Phytozome-508&genome_id=508).
+Transcripts can be grouped by gene with `transcriptsBy()`:
+
+```{r transcriptsBy}
+transcripts_by_gene <- transcriptsBy(
+    TxDb.Gmax.JGI.Gmv4,
+    by = "gene"
+)
+transcripts_by_gene
+```
+
+# Exons grouped by transcript
+
+Exons can be grouped by transcript with `exonsBy()`:
+
+```{r exonsBy}
+exons_by_transcript <- exonsBy(
+    TxDb.Gmax.JGI.Gmv4,
+    by = "tx"
+)
+exons_by_transcript
+```
 
 # Session information
 
