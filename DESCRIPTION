@@ -26,9 +26,9 @@ Depends:
     R (>= 4.6.0)
 Imports:
     AnnotationHub,
-    GenomicFeatures
+    GenomicFeatures,
+    AnnotationDbi
 Suggests:
-    AnnotationDbi,
     BiocManager,
     BiocStyle,
     Biostrings,
